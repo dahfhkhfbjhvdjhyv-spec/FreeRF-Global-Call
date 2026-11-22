@@ -1,0 +1,37 @@
+name: TinyDiffusion CPU Android
+on:
+  push:
+    branches: [tiny-diffusion-cpu]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Checkout Android text-to-image runtime
+        run: |
+          git clone https://github.com/akleine/sdcpp-on-android.git /tmp/t2i
+          cd /tmp/t2i
+          git checkout 98141505007657192d3aa37584079c1ac476761b
+      - name: Apply app branding and CPU-only configuration
+        run: |
+          cp tiny-diffusion-cpu/app-overrides/strings.xml /tmp/t2i/app/src/main/res/values/strings.xml
+          sed -i 's/applicationId = "local.kleine.sdcpp"/applicationId = "com.tinydiffusion.cpu"/' /tmp/t2i/app/build.gradle.kts
+          sed -i 's/versionName = "1.0"/versionName = "0.1.0"/' /tmp/t2i/app/build.gradle.kts
+          if grep -R "SD_OPENCL=ON" -n /tmp/t2i; then echo "Unexpected OpenCL-enabled build configuration"; exit 1; fi
+      - name: Build debug APK
+        working-directory: /tmp/t2i
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon assembleDebug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tiny-diffusion-cpu-debug-apk
+          path: /tmp/t2i/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
