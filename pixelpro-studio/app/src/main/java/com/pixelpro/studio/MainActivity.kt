@@ -129,9 +129,8 @@ private fun Tile(title: String, detail: String, icon: androidx.compose.ui.graphi
 
 private fun enhanceAndSave(context: android.content.Context, uri: Uri): String? {
  return try {
-  val original = context.contentResolver.openInputStream(uri)?.use { BitmapFactory.decodeStream(it) } ?: return null
+  val original = decodeForEnhancement(context, uri) ?: return null
   val enhanced = PhotoEnhancementEngine.enhance(original)
-  val width = enhanced.width
   val values = ContentValues().apply {
    put(MediaStore.Images.Media.DISPLAY_NAME, "PixelPro_Enhanced_${System.currentTimeMillis()}.jpg")
    put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
@@ -142,4 +141,13 @@ private fun enhanceAndSave(context: android.content.Context, uri: Uri): String? 
   original.recycle(); enhanced.recycle()
   "Photo Enhancement সম্পন্ন: denoise + sharpen + color correction + 1920px upscale। Pictures/PixelProStudio-তে সেভ হয়েছে (AI নয়)।"
  } catch (_: Exception) { null }
+}
+
+private fun decodeForEnhancement(context: android.content.Context, uri: Uri): Bitmap? {
+ val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+ context.contentResolver.openInputStream(uri)?.use { BitmapFactory.decodeStream(it, null, bounds) } ?: return null
+ var sample = 1
+ while (maxOf(bounds.outWidth, bounds.outHeight) / sample > 3000) sample *= 2
+ val options = BitmapFactory.Options().apply { inSampleSize = sample; inPreferredConfig = Bitmap.Config.ARGB_8888 }
+ return context.contentResolver.openInputStream(uri)?.use { BitmapFactory.decodeStream(it, null, options) }
 }
