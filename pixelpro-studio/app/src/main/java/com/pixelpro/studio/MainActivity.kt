@@ -127,18 +127,20 @@ private fun Tile(title: String, detail: String, icon: androidx.compose.ui.graphi
  }
 }
 
-private fun upscale(context: android.content.Context, uri: Uri): String? = try {
- val original = context.contentResolver.openInputStream(uri)?.use { BitmapFactory.decodeStream(it) } ?: return null
- val width = 1920
- val height = (original.height.toFloat() * width / original.width).toInt().coerceAtLeast(1)
- val scaled = Bitmap.createScaledBitmap(original, width, height, true)
- val values = ContentValues().apply {
-  put(MediaStore.Images.Media.DISPLAY_NAME, "PixelPro_HD_${System.currentTimeMillis()}.jpg")
-  put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
-  put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/PixelProStudio")
- }
- val dest = context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values) ?: return null
- context.contentResolver.openOutputStream(dest)?.use { scaled.compress(Bitmap.CompressFormat.JPEG, 95, it) }
- original.recycle(); scaled.recycle()
- "ছবি 1920px প্রস্থে সেভ হয়েছে: Pictures/PixelProStudio (সাধারণ রিসাইজ, AI নয়)।"
-} catch (_: Exception) { null }
+private fun upscale(context: android.content.Context, uri: Uri): String? {
+ return try {
+  val original = context.contentResolver.openInputStream(uri)?.use { BitmapFactory.decodeStream(it) } ?: return null
+  val width = 1920
+  val height = (original.height.toFloat() * width / original.width).toInt().coerceAtLeast(1)
+  val scaled = Bitmap.createScaledBitmap(original, width, height, true)
+  val values = ContentValues().apply {
+   put(MediaStore.Images.Media.DISPLAY_NAME, "PixelPro_HD_${System.currentTimeMillis()}.jpg")
+   put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+   put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/PixelProStudio")
+  }
+  val dest = context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values) ?: return null
+  context.contentResolver.openOutputStream(dest)?.use { scaled.compress(Bitmap.CompressFormat.JPEG, 95, it) }
+  original.recycle(); scaled.recycle()
+  "ছবি 1920px প্রস্থে সেভ হয়েছে: Pictures/PixelProStudio (সাধারণ রিসাইজ, AI নয়)।"
+ } catch (_: Exception) { null }
+}
