@@ -1,31 +1,34 @@
-# PixelPro Studio — Android Photo & Video Editor
+# PixelPro Studio
 
-## Photo Enhancement Engine (non-AI)
-Implemented in `app/src/main/java/com/pixelpro/studio/PhotoEnhancementEngine.kt`.
+Android-first photo and video editor. Package: `com.pixelpro.studio`.
 
-Pipeline:
-1. High-quality bitmap resampling to a 1920-pixel long edge.
-2. Optional 3x3 median denoise passes.
-3. Unsharp-mask sharpening.
-4. Contrast and saturation tuning.
-5. Save a separate JPEG copy under `Pictures/PixelProStudio`.
+## Confirmed product decisions
+- AI mode: **on-device/local only**; no cloud inference or required account.
+- UI: Bangla + English (localization rollout is planned; current prototype contains mixed Bangla/English strings).
+- Photo target: Pro quality.
+- Offline editing, ad-free product, and 4K export target.
 
-This is classical image processing and runs locally on Android. It does not call a model, cloud API, or AI service. It can improve mild softness/noise and make edges appear clearer, but cannot recover detail absent from the original capture. Strong sharpening can create halos; aggressive denoise can erase texture. The initial preset is deliberately restrained.
+## Current implementation (prototype)
+- Kotlin + Jetpack Compose Android shell with original PixelPro branding.
+- Android Photo Picker for still images and up to 20 video clips.
+- Classical, non-AI photo pipeline: high-quality resampling, 3x3 bilateral denoise, luminance sharpening/detail, local contrast and color finishing.
+- Saves enhanced JPEG copies to `Pictures/PixelProStudio`.
+- Video clip selection list only; concatenation/rendering/export are **not implemented**.
 
-## Android starter features
-- Kotlin + Jetpack Compose app shell and original launcher icon.
-- Android Photo Picker for image selection.
-- Non-AI enhancement workflow and output saving.
-- Multi-video selection list (timeline prototype).
+## Important quality limits
+The current photo engine is a conventional image-processing baseline, not an AI restoration model. It cannot reconstruct details that were never captured. 4K export is a target and must be gated by available memory, codec and device capability. It must not be presented as a verified feature until a real 4K output has been generated and tested on devices.
 
-## Not implemented yet
-- Real video concatenation/render/export.
-- Clip trimming, transitions, audio mixing, subtitles, stabilization.
-- AI super-resolution, generative image restoration, or AI video generation.
-- DSLR optical depth-of-field or genuine camera capture quality reconstruction.
+## Local AI strategy
+See [LOCAL_AI_PLAN.md](LOCAL_AI_PLAN.md). The project will use an appropriately licensed pretrained on-device model for inference; training a high-quality restoration model from scratch on a phone is not a realistic first milestone. Model files must be versioned, license-reviewed, checksummed, and tested on supported Android hardware before the UI advertises the feature as available.
 
 ## Build
-Requires JDK 17 and Android SDK 35. From this directory:
-`gradle assembleDebug`
+Requires JDK 17 and Android SDK 35. From this directory run `gradle assembleDebug`.
+GitHub Actions workflow: `.github/workflows/pixelpro-android.yml`.
 
-Package: `com.pixelpro.studio` · Min Android: API 26 · Target API: 35
+## Roadmap
+1. Stabilize and test the Android shell and baseline photo processing.
+2. Add bounded-memory image pipeline, before/after comparison, and real 4K photo export with capability checks.
+3. Integrate a licensed local photo restoration/upscaling model and benchmark latency/RAM.
+4. Build a real multi-track video timeline and offline Media3 rendering pipeline.
+5. Add local AI features only where model quality/performance is acceptable; keep unavailable features clearly marked.
+6. Complete Bangla/English resources, accessibility, device QA, and release signing.
