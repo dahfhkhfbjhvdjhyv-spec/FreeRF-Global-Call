@@ -25,7 +25,7 @@ class MainActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        adapter = (getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager).adapter
+        adapter = (getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager).adapter\n            ?: throw IllegalStateException("Bluetooth is not available on this device")
         val root = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             gravity = Gravity.CENTER
