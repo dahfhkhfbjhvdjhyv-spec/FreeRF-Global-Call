@@ -1,0 +1,14 @@
+FreeMind Scratch training pipeline seed corpus.
+This text exists only to verify that the byte-level language-model trainer can read UTF-8 text, construct next-byte examples, perform a forward pass, and save a checkpoint. It is far too small to teach language competence.
+
+বাংলা একটি ভাষা। বাংলা ভাষায় স্বরবর্ণ, ব্যঞ্জনবর্ণ, শব্দ, বাক্য এবং নানা ধরনের বিরামচিহ্ন রয়েছে। একটি ভাষা মডেল পরবর্তী অক্ষর বা বাইটের সম্ভাবনা অনুমান করতে শেখে। পর্যাপ্ত ও বৈচিত্র্যময় প্রশিক্ষণ-তথ্য ছাড়া সে নির্ভরযোগ্য জ্ঞান বা কথোপকথনের দক্ষতা অর্জন করতে পারে না।
+
+মানুষ প্রশ্ন করে, উত্তর পড়ে, আবার নতুন প্রশ্ন করে। একটি সহায়ক মডেলের উচিত প্রশ্নটি বোঝার চেষ্টা করা, জানা তথ্যের ভিত্তিতে উত্তর দেওয়া, অনিশ্চিত হলে তা স্বীকার করা এবং ক্ষতিকর কাজে সহায়তা না করা। এই কয়েকটি বাক্য কেবল পরীক্ষামূলক নমুনা; এগুলো দিয়ে এমন আচরণ শেখানো সম্ভব নয়।
+
+English is a language used for communication, education, science, and creative work. A language model is trained to predict the next token from previous tokens. A tiny corpus is useful for testing software, but it cannot provide broad knowledge, reasoning, factual accuracy, or robust dialogue.
+
+A good training pipeline should separate training and validation data, record losses, save checkpoints, and test generated outputs. It should also track data sources and licenses. Low training loss on a tiny repeated dataset is not evidence of general intelligence.
+
+বাংলা ও ইংরেজি দুই ভাষার তথ্য একত্রে ব্যবহার করা যেতে পারে। তবে ডেটাসেট পরিষ্কার, বৈচিত্র্যময়, পুনরাবৃত্তিমুক্ত এবং যথাযথ অনুমতিসম্পন্ন হওয়া দরকার। প্রশিক্ষণের ফলাফল স্বাধীন পরীক্ষার মাধ্যমে যাচাই করতে হবে।
+
+The quick brown fox jumps over the lazy dog. The rain in Spain stays mainly in the plain. Numbers: 0 1 2 3 4 5 6 7 8 9. Mathematical symbols: + - * / = < >. These examples are for byte encoding and software tests only.
