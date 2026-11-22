@@ -1,6 +1,11 @@
 name: FreeMind CPU smoke training
 
 on:
+  push:
+    branches: [freemind-ai-v0.4]
+    paths:
+      - "freemind-ai/**"
+      - ".github/workflows/freemind-cpu-smoke.yml"
   workflow_dispatch:
     inputs:
       epochs:
@@ -23,7 +28,7 @@ jobs:
           pip install torch --index-url https://download.pytorch.org/whl/cpu
       - name: Run smoke training
         working-directory: freemind-ai
-        run: python train.py --epochs "${{ inputs.epochs }}" --batch-size 8
+        run: python train.py --epochs "${{ inputs.epochs || '2' }}" --batch-size 8
       - name: Upload experimental checkpoint
         uses: actions/upload-artifact@v4
         with:
