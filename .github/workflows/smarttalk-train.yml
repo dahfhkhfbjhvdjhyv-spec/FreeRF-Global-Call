@@ -1,0 +1,30 @@
+name: SmartTalk Bengali from-scratch training
+on:
+  push:
+    branches: [smarttalk-ai]
+    paths: ['smarttalk-ai/**', '.github/workflows/smarttalk-train.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: smarttalk-ai/requirements.txt
+      - name: Install training dependency
+        run: pip install -r smarttalk-ai/requirements.txt
+      - name: Train tiny Bengali model from random initialization
+        working-directory: smarttalk-ai
+        run: python train.py --steps 300 --out model-output
+      - name: Upload experimental checkpoint
+        uses: actions/upload-artifact@v4
+        with:
+          name: smarttalk-bengali-baseline-checkpoint
+          path: smarttalk-ai/model-output/
+          if-no-files-found: error
+          retention-days: 14
