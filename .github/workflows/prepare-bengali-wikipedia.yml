@@ -1,0 +1,39 @@
+name: Prepare complete Bengali Wikipedia corpus
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install dataset tools
+        run: python -m pip install --upgrade pip datasets
+      - name: Stream all Bengali Wikipedia articles
+        run: python freemind-scratch/prepare_wikipedia_bn.py
+      - name: Verify full corpus and manifest
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path("freemind-scratch/data/wikipedia_bn/bn_wikipedia.txt")
+          m = json.loads(Path("freemind-scratch/data/wikipedia_bn/dataset_manifest.json").read_text())
+          assert p.exists() and p.stat().st_size > 1_000_000
+          assert m["articles_written"] == m["expected_articles_from_dataset_card"], m
+          print("VERIFIED", m["articles_written"], "articles", p.stat().st_size, "bytes")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: freemind-complete-bengali-wikipedia-corpus
+          path: freemind-scratch/data/wikipedia_bn/
+          if-no-files-found: error
+          retention-days: 30
