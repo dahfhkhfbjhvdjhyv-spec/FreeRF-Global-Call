@@ -16,7 +16,7 @@ Target model: **SDXS-512 Tiny Distilled Q8_0 GGUF** (about 683 MB), hosted by [c
 
 This branch packages an Android app shell based on the MIT-licensed [sdcpp-on-android](https://github.com/akleine/sdcpp-on-android) project and its stable-diffusion.cpp native runtime. The GitHub Actions workflow builds a debug APK and publishes it as an artifact.
 
-**Important:** the APK build is not proof that SDXS Tiny inference works on every Android phone. The model is selected/imported by the user; this branch does not bundle the 683 MB model inside the APK. A real device test with the exact GGUF file is required before calling the model integration verified. If the runtime rejects the GGUF architecture, the native backend must be updated to a compatible stable-diffusion.cpp revision.
+**Important:** the APK build is not proof that SDXS Tiny inference works on every Android phone. The model is selected/imported by the user; this branch does not bundle the 683 MB model inside the APK. The first prototype currently relies on the upstream file picker; a built-in one-tap model downloader is still a follow-up task. A real device test with the exact GGUF file is required before calling the model integration verified. If the runtime rejects the GGUF architecture, the native backend must be updated to a compatible stable-diffusion.cpp revision.
 
 ## App scope
 
