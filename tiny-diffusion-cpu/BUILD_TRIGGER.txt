@@ -1,0 +1,1 @@
+CPU-only Android Text-to-Image prototype build trigger.
