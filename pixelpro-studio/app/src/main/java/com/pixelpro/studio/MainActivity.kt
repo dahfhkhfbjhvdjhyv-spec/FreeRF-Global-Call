@@ -10,6 +10,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -71,7 +72,7 @@ private fun PixelProScreen() {
     item { Text("ফটো এডিটিং", color = Color.White, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold) }
     item {
      Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-      Tile("ছবি বাছাই", "গ্যালারি থেকে", Icons.Default.AddPhotoAlternate, Modifier.weight(1f)) { pickPhoto.launch(ActivityResultContracts.PickVisualMedia.ImageOnly) }
+      Tile("ছবি বাছাই", "গ্যালারি থেকে", Icons.Default.AddPhotoAlternate, Modifier.weight(1f)) { pickPhoto.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)) }
       Tile("Photo Enhance", "HD + Sharpen + Denoise", Icons.Default.HighQuality, Modifier.weight(1f)) {
        val chosen = photo
        if (chosen == null) status = "আগে একটি ছবি বাছাই করুন" else {
@@ -92,7 +93,7 @@ private fun PixelProScreen() {
     }
     item { photo?.let { AsyncImage(model = it, contentDescription = "নির্বাচিত ছবি", modifier = Modifier.fillMaxWidth().height(210.dp)) } }
     item { Text("ভিডিও স্টুডিও", color = Color.White, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold) }
-    item { Tile("একাধিক ভিডিও যোগ করুন", "২০টি পর্যন্ত ক্লিপ বাছাই", Icons.Default.VideoLibrary, Modifier.fillMaxWidth()) { pickVideos.launch(ActivityResultContracts.PickVisualMedia.VideoOnly) } }
+    item { Tile("একাধিক ভিডিও যোগ করুন", "২০টি পর্যন্ত ক্লিপ বাছাই", Icons.Default.VideoLibrary, Modifier.fillMaxWidth()) { pickVideos.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.VideoOnly)) } }
     item { Text("টাইমলাইন · ${clips.size}টি ক্লিপ", color = Mint, fontWeight = FontWeight.SemiBold) }
     itemsIndexed(clips) { index, uri ->
      Row(Modifier.fillMaxWidth().background(Color(0xFF1B2140), RoundedCornerShape(12.dp)).padding(10.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -119,7 +120,7 @@ private fun PixelProScreen() {
     item {
      if (busy) LinearProgressIndicator(Modifier.fillMaxWidth(), color = Mint)
      Text(status, color = Mint)
-     Text("Photo Enhancement Engine AI ছাড়া median denoise, unsharp sharpening, contrast/color tuning ও 1920px upscale ব্যবহার করে। হারানো আসল ডিটেইল ফিরিয়ে আনতে পারে না। ভিডিও রেন্ডারিং ও AI ভিডিও এখনো কার্যকর করা হয়নি।", color = Color.LightGray, style = MaterialTheme.typography.bodySmall)
+     Text("Photo Enhancement Engine AI ছাড়া bilateral denoise, unsharp sharpening, contrast/color tuning ও 1920px upscale ব্যবহার করে। হারানো আসল ডিটেইল ফিরিয়ে আনতে পারে না। ভিডিও রেন্ডারিং ও AI ভিডিও এখনো কার্যকর করা হয়নি।", color = Color.LightGray, style = MaterialTheme.typography.bodySmall)
     }
    }
   }
