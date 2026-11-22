@@ -49,6 +49,7 @@ private fun PixelProScreen() {
  val clips = remember { mutableStateListOf<Uri>() }
  var status by remember { mutableStateOf("আপনার সৃজনশীল কাজ শুরু করুন") }
  var busy by remember { mutableStateOf(false) }
+ var enhancePreset by remember { mutableStateOf("Balanced") }
  val pickPhoto = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { it?.let { photo = it; status = "ছবি নির্বাচন করা হয়েছে" } }
  val pickVideos = rememberLauncherForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(20)) { list ->
   clips.clear(); clips.addAll(list); status = "${list.size}টি ভিডিও ক্লিপ নির্বাচন করা হয়েছে"
@@ -75,8 +76,16 @@ private fun PixelProScreen() {
        val chosen = photo
        if (chosen == null) status = "আগে একটি ছবি বাছাই করুন" else {
         busy = true
-        scope.launch { status = withContext(Dispatchers.IO) { enhanceAndSave(context, chosen) } ?: "ছবি প্রসেস করা যায়নি"; busy = false }
+        scope.launch { status = withContext(Dispatchers.IO) { enhanceAndSave(context, chosen, enhancePreset) } ?: "ছবি প্রসেস করা যায়নি"; busy = false }
        }
+      }
+     }
+    }
+    item {
+     Text("Enhancement Preset", color = Mint, fontWeight = FontWeight.SemiBold)
+     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+      listOf("Natural", "Balanced", "Detail").forEach { preset ->
+       FilterChip(selected = enhancePreset == preset, onClick = { enhancePreset = preset }, label = { Text(preset) })
       }
      }
     }
@@ -127,10 +136,15 @@ private fun Tile(title: String, detail: String, icon: androidx.compose.ui.graphi
  }
 }
 
-private fun enhanceAndSave(context: android.content.Context, uri: Uri): String? {
+private fun enhanceAndSave(context: android.content.Context, uri: Uri, preset: String): String? {
  return try {
   val original = decodeForEnhancement(context, uri) ?: return null
-  val enhanced = PhotoEnhancementEngine.enhance(original)
+  val settings = when (preset) {
+   "Natural" -> PhotoEnhancementEngine.Settings(denoise = 1, sharpen = 0.35f, contrast = 1.02f, saturation = 1.02f)
+   "Detail" -> PhotoEnhancementEngine.Settings(denoise = 1, sharpen = 1.05f, contrast = 1.10f, saturation = 1.05f)
+   else -> PhotoEnhancementEngine.Settings()
+  }
+  val enhanced = PhotoEnhancementEngine.enhance(original, settings)
   val values = ContentValues().apply {
    put(MediaStore.Images.Media.DISPLAY_NAME, "PixelPro_Enhanced_${System.currentTimeMillis()}.jpg")
    put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
@@ -139,7 +153,7 @@ private fun enhanceAndSave(context: android.content.Context, uri: Uri): String? 
   val dest = context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values) ?: return null
   context.contentResolver.openOutputStream(dest)?.use { enhanced.compress(Bitmap.CompressFormat.JPEG, 96, it) }
   original.recycle(); enhanced.recycle()
-  "Photo Enhancement সম্পন্ন: denoise + sharpen + color correction + 1920px upscale। Pictures/PixelProStudio-তে সেভ হয়েছে (AI নয়)।"
+  "Photo Enhancement সম্পন্ন ($preset): denoise + sharpen + color correction + 1920px upscale। Pictures/PixelProStudio-তে সেভ হয়েছে (AI নয়)।"
  } catch (_: Exception) { null }
 }
 
