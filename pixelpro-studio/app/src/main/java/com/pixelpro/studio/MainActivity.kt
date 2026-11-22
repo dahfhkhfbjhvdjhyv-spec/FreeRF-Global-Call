@@ -109,7 +109,7 @@ private fun PixelProScreen() {
     item {
      if (busy) LinearProgressIndicator(Modifier.fillMaxWidth(), color = Mint)
      Text(status, color = Mint)
-     Text("সতর্কতা: এই সংস্করণে HD রিসাইজ সাধারণ ইমেজ স্কেলিং; AI দিয়ে হারানো ডিটেইল পুনরুদ্ধার নয়। ভিডিও জোড়া ও AI ভিডিও এখনো কার্যকর করা হয়নি।", color = Color.LightGray, style = MaterialTheme.typography.bodySmall)
+     Text("Photo Enhancement Engine AI ছাড়া median denoise, unsharp sharpening, contrast/color tuning ও 1920px upscale ব্যবহার করে। হারানো আসল ডিটেইল ফিরিয়ে আনতে পারে না। ভিডিও রেন্ডারিং ও AI ভিডিও এখনো কার্যকর করা হয়নি।", color = Color.LightGray, style = MaterialTheme.typography.bodySmall)
     }
    }
   }
