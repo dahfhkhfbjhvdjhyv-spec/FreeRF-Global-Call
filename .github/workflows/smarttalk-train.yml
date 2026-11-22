@@ -7,7 +7,7 @@ on:
 permissions:
   contents: read
 jobs:
-  train:
+  train-and-evaluate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -21,10 +21,16 @@ jobs:
       - name: Train tiny Bengali model from random initialization
         working-directory: smarttalk-ai
         run: python train.py --steps 300 --out model-output
-      - name: Upload experimental checkpoint
+      - name: Evaluate on held-out Bengali prompts
+        working-directory: smarttalk-ai
+        run: python evaluate.py --checkpoint model-output/model.pt | tee model-output/evaluation.txt
+      - name: Generate sample answer for manual review
+        working-directory: smarttalk-ai
+        run: python generate.py --checkpoint model-output/model.pt --prompt "প্রশ্ন: বাংলাদেশের রাজধানী কী? উত্তর:" --tokens 80 | tee model-output/sample.txt
+      - name: Upload experimental checkpoint and evaluation
         uses: actions/upload-artifact@v4
         with:
-          name: smarttalk-bengali-baseline-checkpoint
+          name: smarttalk-bengali-baseline-evaluation
           path: smarttalk-ai/model-output/
           if-no-files-found: error
           retention-days: 14
