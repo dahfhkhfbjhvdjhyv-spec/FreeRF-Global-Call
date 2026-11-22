@@ -10,7 +10,7 @@ import torch.nn.functional as F
 
 ROOT = Path(__file__).resolve().parent
 CONFIG_PATH = ROOT / "config.json"
-DATA_DIR = ROOT / "data" / "corpus"
+DATA_DIR = ROOT / "data"
 OUT_DIR = ROOT / "outputs"
 
 
