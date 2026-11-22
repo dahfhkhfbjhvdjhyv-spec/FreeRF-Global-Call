@@ -65,7 +65,6 @@ class MainActivity : Activity() {
         val needed = mutableListOf(Manifest.permission.RECORD_AUDIO)
         if (Build.VERSION.SDK_INT >= 31) {
             needed += Manifest.permission.BLUETOOTH_CONNECT
-            needed += Manifest.permission.BLUETOOTH_SCAN
         }
         val missing = needed.filter { checkSelfPermission(it) != PackageManager.PERMISSION_GRANTED }
         if (missing.isNotEmpty()) requestPermissions(missing.toTypedArray(), 7)
