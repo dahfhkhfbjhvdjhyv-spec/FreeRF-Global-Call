@@ -71,11 +71,11 @@ private fun PixelProScreen() {
     item {
      Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
       Tile("ছবি বাছাই", "গ্যালারি থেকে", Icons.Default.AddPhotoAlternate, Modifier.weight(1f)) { pickPhoto.launch(ActivityResultContracts.PickVisualMedia.ImageOnly) }
-      Tile("HD রিসাইজ", "1920px প্রস্থ", Icons.Default.HighQuality, Modifier.weight(1f)) {
+      Tile("Photo Enhance", "HD + Sharpen + Denoise", Icons.Default.HighQuality, Modifier.weight(1f)) {
        val chosen = photo
        if (chosen == null) status = "আগে একটি ছবি বাছাই করুন" else {
         busy = true
-        scope.launch { status = withContext(Dispatchers.IO) { upscale(context, chosen) } ?: "ছবি প্রসেস করা যায়নি"; busy = false }
+        scope.launch { status = withContext(Dispatchers.IO) { enhanceAndSave(context, chosen) } ?: "ছবি প্রসেস করা যায়নি"; busy = false }
        }
       }
      }
@@ -99,7 +99,7 @@ private fun PixelProScreen() {
     item {
      Text("আরও এডিটিং ফিচার", color = Color.White, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
      Column(Modifier.padding(top = 8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-      listOf("AI Blur Fix ও Super Resolution", "ভিডিও কাট / ট্রিম / Split", "Transition ও একাধিক ক্লিপ জোড়া", "Background Remove", "Stabilization ও Color Grading", "সাবটাইটেল, টেক্সট ও অডিও", "AI ভিডিও জেনারেশন", "4K Export (ডিভাইস সাপোর্ট সাপেক্ষে)").forEach { label ->
+      listOf("Non-AI Sharpen / Deblur Filters", "Noise Reduction ও Color Enhance", "ভিডিও কাট / ট্রিম / Split", "Transition ও একাধিক ক্লিপ জোড়া", "Background Remove", "Stabilization ও Color Grading", "সাবটাইটেল, টেক্সট ও অডিও", "AI ভিডিও জেনারেশন", "4K Export (ডিভাইস সাপোর্ট সাপেক্ষে)").forEach { label ->
        Row(Modifier.fillMaxWidth().background(Color(0xFF1B2140), RoundedCornerShape(12.dp)).padding(13.dp), verticalAlignment = Alignment.CenterVertically) {
         Icon(Icons.Default.AutoFixHigh, null, tint = Mint); Text(label, color = Color.White, modifier = Modifier.padding(start = 10.dp))
        }
@@ -127,20 +127,19 @@ private fun Tile(title: String, detail: String, icon: androidx.compose.ui.graphi
  }
 }
 
-private fun upscale(context: android.content.Context, uri: Uri): String? {
+private fun enhanceAndSave(context: android.content.Context, uri: Uri): String? {
  return try {
   val original = context.contentResolver.openInputStream(uri)?.use { BitmapFactory.decodeStream(it) } ?: return null
-  val width = 1920
-  val height = (original.height.toFloat() * width / original.width).toInt().coerceAtLeast(1)
-  val scaled = Bitmap.createScaledBitmap(original, width, height, true)
+  val enhanced = PhotoEnhancementEngine.enhance(original)
+  val width = enhanced.width
   val values = ContentValues().apply {
-   put(MediaStore.Images.Media.DISPLAY_NAME, "PixelPro_HD_${System.currentTimeMillis()}.jpg")
+   put(MediaStore.Images.Media.DISPLAY_NAME, "PixelPro_Enhanced_${System.currentTimeMillis()}.jpg")
    put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
    put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/PixelProStudio")
   }
   val dest = context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values) ?: return null
-  context.contentResolver.openOutputStream(dest)?.use { scaled.compress(Bitmap.CompressFormat.JPEG, 95, it) }
-  original.recycle(); scaled.recycle()
-  "ছবি 1920px প্রস্থে সেভ হয়েছে: Pictures/PixelProStudio (সাধারণ রিসাইজ, AI নয়)।"
+  context.contentResolver.openOutputStream(dest)?.use { enhanced.compress(Bitmap.CompressFormat.JPEG, 96, it) }
+  original.recycle(); enhanced.recycle()
+  "Photo Enhancement সম্পন্ন: denoise + sharpen + color correction + 1920px upscale। Pictures/PixelProStudio-তে সেভ হয়েছে (AI নয়)।"
  } catch (_: Exception) { null }
 }
