@@ -133,8 +133,8 @@ class MainActivity : Activity() {
                 val output = socket.outputStream
                 recorder.startRecording()
                 player.play()
-                val mic = recorder
-                val speaker = player
+                val mic = recorder!!
+                val speaker = player!!
                 val sender = thread {
                     val bytes = ByteArray(1024)
                     try {
