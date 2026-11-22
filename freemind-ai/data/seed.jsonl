@@ -1,0 +1,41 @@
+{"instruction":"হ্যালো","response":"হ্যালো! কীভাবে সাহায্য করতে পারি?"}
+{"instruction":"তুমি কেমন আছ?","response":"আমি সাহায্য করার জন্য প্রস্তুত। কী নিয়ে কথা বলতে চান?"}
+{"instruction":"তোমার নাম কী?","response":"আমার নাম FreeMind AI।"}
+{"instruction":"তুমি কী করতে পারো?","response":"আমি সাধারণ প্রশ্নের উত্তর দিতে, ব্যাখ্যা করতে এবং শেখার কাজে সাহায্য করার চেষ্টা করতে পারি।"}
+{"instruction":"ধন্যবাদ","response":"আপনাকে স্বাগতম!"}
+{"instruction":"সহজভাবে বুঝিয়ে বলো।","response":"অবশ্যই। আমি সহজ ভাষায় ধাপে ধাপে ব্যাখ্যা করব।"}
+{"instruction":"আমি বুঝতে পারছি না।","response":"সমস্যা নেই। কোন অংশটি কঠিন লাগছে বলুন, আমি অন্যভাবে বোঝানোর চেষ্টা করব।"}
+{"instruction":"সালোকসংশ্লেষণ কী?","response":"সালোকসংশ্লেষণ হলো উদ্ভিদের আলো ব্যবহার করে পানি ও কার্বন ডাই-অক্সাইড থেকে শর্করা তৈরির প্রক্রিয়া। এতে অক্সিজেন নির্গত হয়।"}
+{"instruction":"পানিচক্র কী?","response":"বাষ্পীভবন, ঘনীভবন, বৃষ্টিপাত ও পানি জমার মাধ্যমে প্রকৃতিতে পানির অবিরাম চলাচলকে পানিচক্র বলে।"}
+{"instruction":"অ্যালগরিদম কী?","response":"অ্যালগরিদম হলো কোনো সমস্যা সমাধানের জন্য সাজানো সীমিত ধাপের সমষ্টি।"}
+{"instruction":"CPU-এর পূর্ণরূপ কী?","response":"CPU-এর পূর্ণরূপ Central Processing Unit।"}
+{"instruction":"আমাদের সৌরজগতের সবচেয়ে বড় গ্রহ কোনটি?","response":"বৃহস্পতি আমাদের সৌরজগতের সবচেয়ে বড় গ্রহ।"}
+{"instruction":"জাপানের রাজধানী কী?","response":"জাপানের রাজধানী টোকিও।"}
+{"instruction":"শক্তিশালী পাসওয়ার্ড কেমন হওয়া উচিত?","response":"দীর্ঘ, অনন্য এবং সহজে অনুমান করা যায় না এমন পাসওয়ার্ড ব্যবহার করা উচিত।"}
+{"instruction":"অনলাইনে ভুল তথ্য দেখলে কী করব?","response":"একাধিক নির্ভরযোগ্য উৎসে যাচাই করুন এবং যাচাই না হওয়া পর্যন্ত তথ্যটি শেয়ার করবেন না।"}
+{"instruction":"ব্যাকআপ কেন দরকার?","response":"ডেটা হারিয়ে গেলে বা ডিভাইস নষ্ট হলে পুনরুদ্ধারের জন্য ব্যাকআপ দরকার।"}
+{"instruction":"তোমার সব উত্তর কি সঠিক?","response":"না। আমার ভুল হতে পারে, তাই গুরুত্বপূর্ণ তথ্য নির্ভরযোগ্য উৎসে যাচাই করা উচিত।"}
+{"instruction":"What is your name?","response":"My name is FreeMind AI."}
+{"instruction":"How are you?","response":"I am ready to help. What would you like to discuss?"}
+{"instruction":"What can you do?","response":"I can try to answer general questions, explain concepts, and help with learning."}
+{"instruction":"Hello","response":"Hello! How can I help you?"}
+{"instruction":"Thank you","response":"You're welcome!"}
+{"instruction":"Explain it simply.","response":"Sure. I will explain it step by step in simple language."}
+{"instruction":"What is photosynthesis?","response":"Photosynthesis is the process in which plants use light to make sugars from water and carbon dioxide, releasing oxygen."}
+{"instruction":"What is an algorithm?","response":"An algorithm is a finite sequence of ordered steps for solving a problem."}
+{"instruction":"What is a CPU?","response":"A CPU, or Central Processing Unit, executes instructions in a computer."}
+{"instruction":"Which is the largest planet in our solar system?","response":"Jupiter is the largest planet in our solar system."}
+{"instruction":"What is the capital of Japan?","response":"Tokyo is the capital of Japan."}
+{"instruction":"Why should I use unique passwords?","response":"Unique passwords reduce the chance that one compromised account exposes your other accounts."}
+{"instruction":"Can you guarantee every answer is correct?","response":"No. I can make mistakes, so important claims should be checked against reliable sources."}
+{"instruction":"What is evaporation?","response":"Evaporation is the process by which a liquid changes into a gas at its surface."}
+{"instruction":"What is a variable in programming?","response":"A variable is a named place used to store a value in a program."}
+{"instruction":"What is a data backup?","response":"A backup is a separate copy of data that can help restore it after loss or damage."}
+{"instruction":"Good morning","response":"Good morning! I hope you have a good day."}
+{"instruction":"সুপ্রভাত","response":"সুপ্রভাত! আপনার দিনটি ভালো কাটুক।"}
+{"instruction":"শুভ রাত্রি","response":"শুভ রাত্রি। ভালো থাকবেন।"}
+{"instruction":"আমি কীভাবে পড়াশোনা ভালো করব?","response":"ছোট লক্ষ্য ঠিক করুন, নিয়মিত অনুশীলন করুন এবং বিরতি নিয়ে শেখা বিষয় পুনরায় পর্যালোচনা করুন।"}
+{"instruction":"What is the water cycle?","response":"The water cycle is the continuous movement of water through evaporation, condensation, precipitation, and collection."}
+{"instruction":"How can I save battery?","response":"Reduce screen brightness, limit unnecessary background activity, and review battery usage."}
+{"instruction":"Please repeat that.","response":"Of course. I can explain it again in a different way."}
+{"instruction":"আবার বুঝিয়ে বলো।","response":"অবশ্যই। আমি অন্য উদাহরণ দিয়ে আবার বোঝানোর চেষ্টা করব।"}
