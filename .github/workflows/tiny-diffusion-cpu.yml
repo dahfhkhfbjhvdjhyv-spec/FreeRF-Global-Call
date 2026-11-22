@@ -21,7 +21,8 @@ jobs:
           git checkout 98141505007657192d3aa37584079c1ac476761b
       - name: Apply app branding and CPU-only configuration
         run: |
-          cp tiny-diffusion-cpu/app-overrides/strings.xml /tmp/t2i/app/src/main/res/values/strings.xml
+          sed -i 's#<string name="app_name">SD.cpp</string>#<string name="app_name">TinyDiffusion CPU</string>#' /tmp/t2i/app/src/main/res/values/strings.xml
+          grep -q '<string name="field_prompt">' /tmp/t2i/app/src/main/res/values/strings.xml
           sed -i 's/applicationId = "local.kleine.sdcpp"/applicationId = "com.tinydiffusion.cpu"/' /tmp/t2i/app/build.gradle.kts
           sed -i 's/versionName = "1.0"/versionName = "0.1.0"/' /tmp/t2i/app/build.gradle.kts
       - name: Build debug APK
