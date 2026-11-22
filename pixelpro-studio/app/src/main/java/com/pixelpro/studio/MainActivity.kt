@@ -76,7 +76,8 @@ private fun PixelProScreen() {
        val chosen = photo
        if (chosen == null) status = "আগে একটি ছবি বাছাই করুন" else {
         busy = true
-        scope.launch { status = withContext(Dispatchers.IO) { enhanceAndSave(context, chosen, enhancePreset) } ?: "ছবি প্রসেস করা যায়নি"; busy = false }
+        val selectedPreset = enhancePreset
+        scope.launch { status = withContext(Dispatchers.IO) { enhanceAndSave(context, chosen, selectedPreset) } ?: "ছবি প্রসেস করা যায়নি"; busy = false }
        }
       }
      }
