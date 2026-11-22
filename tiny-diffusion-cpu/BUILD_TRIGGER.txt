@@ -1,1 +1,1 @@
-CPU-only Android Text-to-Image prototype build trigger.
+Rebuild after preserving upstream Android string resources.
