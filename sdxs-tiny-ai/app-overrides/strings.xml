@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">SDXS Tiny AI</string>
+    <string name="request_permission">Allow access to select your local model</string>
+    <string name="request_write">Allow saving generated images</string>
+    <string name="submit">Generate Image</string>
+    <string name="close">Close</string>
+    <string name="field_prompt">Describe the image:</string>
+    <string name="default_prompt">A beautiful cinematic landscape at golden hour</string>
+    <string name="field_negative">Negative prompt:</string>
+    <string name="default_negative">blurry, low quality</string>
+    <string name="field_steps">Steps:</string>
+    <string name="default_steps">1</string>
+    <string name="field_seed">Seed:</string>
+    <string name="default_minus1">-1</string>
+    <string name="field_modelfile">SDXS model file:</string>
+    <string name="field_embedd">Embeddings</string>
+    <string name="field_gpu">GPU</string>
+    <string name="field_taesd">Use TAESD</string>
+    <string name="field_taesdXL">Use TAESD XL</string>
+    <string name="field_lorapath">LoRA path:</string>
+    <string name="field_widthXheight">Image size:</string>
+    <string name="default_height">512</string>
+    <string name="default_width">512</string>
+    <string name="field_cfgs">CFG:</string>
+    <string name="default_cfg">1</string>
+    <string name="sampler">Sampler:</string>
+    <string name="scheduler">Scheduler:</string>
+    <string name="field_options">Advanced runtime options:</string>
+    <string name="options" translatable="false"></string>
+    <string name="application_settings">Please grant the required file access in Android settings.</string>
+    <string name="can_not_run_sd_process">Cannot start the local image generation engine: </string>
+    <string name="write_cmdline">Save command line</string>
+    <string name="write_log">Save generation log</string>
+    <string name="vae_tiling">VAE tiling</string>
+    <string name="conv_direct">Direct convolution</string>
+    <string name="param_template">Load parameters from script</string>
+    <string name="more_settings_closed">Advanced settings</string>
+    <string name="more_settings_opened">Hide advanced settings</string>
+    <string name="close_dialog">Close</string>
+    <string name="images_format">Image format:</string>
+    <string name="quantizer">Quantizer:</string>
+    <string name="t5xxl">T5XXL file:</string>
+    <string name="vae">VAE file:</string>
+    <string name="llm">LLM file:</string>
+</resources>
