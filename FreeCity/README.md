@@ -1,41 +1,42 @@
 # FreeCity
 
-A Unity-based, offline, third-person open-world Android game prototype.
+Unity-based offline open-world Android game prototype, targeting a playable first vertical slice.
 
-## Selected direction
-- Engine: Unity
-- Visual target: cinematic presentation, with scalable Android quality settings
-- World: large open-world layout, streamed in additive zones
-- Platform: Android (ARM64)
-- First milestone: a playable vertical slice, not a GTA-scale finished game
+## Game direction
+- Engine: Unity 2022.3.50f1
+- Platform: Android ARM64, landscape
+- Mode: offline single-player
+- World: 500 x 500 m prototype city block
+- Art direction: cinematic target with scalable mobile settings
 
-## Project setup
-Open this folder in a compatible Unity LTS editor. Install Android Build Support, Android SDK & NDK Tools, and OpenJDK through Unity Hub. Open the scene created under `Assets/Scenes` (the initial scene is assembled in the editor).
+## Current gameplay systems in source
+- Third-person player controller and follow camera
+- Visible on-screen movement pad plus gas, brake, steering, enter and exit buttons
+- Drivable starter vehicle with camera handoff
+- Six lightweight ambient traffic cars
+- First Drive mission with a checkpoint and completion state
+- Procedural prototype city scene generator
 
-## Prototype controls
-- Walk: left-side touchscreen drag; keyboard WASD/arrows in the Unity Editor
-- Run: Left Shift in the Editor
-- Enter nearby car: E
-- Drive: right-side touchscreen drag; keyboard WASD/arrows in the Editor
-- Exit car: F
+## Generate and play in Unity
+1. Open the `FreeCity` folder in Unity 2022.3.50f1.
+2. Install Android Build Support, Android SDK & NDK Tools, and OpenJDK through Unity Hub if building for Android.
+3. Wait for packages to resolve.
+4. Select **FreeCity > Generate Prototype City Scene**.
+5. Open `Assets/Scenes/FreeCity_Prototype.unity` and press Play.
+6. For editor keyboard testing: WASD/arrows move/drive, E enters a nearby car, F exits.
 
-## Generate and test the scene
-Open the `FreeCity` folder in Unity 2022.3.50f1, wait for packages to resolve, then select **FreeCity > Generate Prototype City Scene**. Open `Assets/Scenes/FreeCity_Prototype.unity` and press Play.
+## Android APK
+The repository includes **Actions > Free City Android APK**. It requires a valid Unity Personal license file in the repository Actions secret named `UNITY_LICENSE`. Run the workflow manually after adding the secret. A successful run uploads `FreeCity-Android-APK`.
 
-## Android build
-The repository includes a GitHub Actions workflow at **Actions > Free City Android APK**. It requires a valid Unity Personal license file stored as the repository Actions secret `UNITY_LICENSE`. Run the workflow manually after adding that secret. The APK is uploaded as the `FreeCity-Android-APK` artifact.
+## Honest build status
+The gameplay source and scene generator are committed. This environment has not run Unity Editor, compiled the project, launched gameplay, or produced an APK. Those checks must pass before this can be called a verified playable Android release. The city, traffic, mission and controls are an initial vertical slice—not a finished GTA-scale game.
 
-## Current status
-The initial gameplay prototype source and a reproducible Android build entry point are committed. No APK has been built or runtime-tested yet; Unity compilation and the Android build still require the Unity license secret and a successful Actions run.
+## Next milestones
+- Test and fix Unity compile/runtime issues
+- Add pedestrian AI, traffic rules, collision/vehicle physics and multiple missions
+- Expand districts with streamed scenes and optimized assets
+- Add LODs, baked lighting, occlusion and device-specific quality presets
+- Profile on real Android devices and publish a signed APK
 
-## Planned milestones
-1. Player movement and follow camera
-2. Drivable vehicle prototype
-3. Small city block with roads, buildings and collision
-4. Interaction and mission framework
-5. Traffic, pedestrians and police AI
-6. Expand the map using additive scene streaming
-7. Android profiling and quality presets
-
-## Performance strategy
-Cinematic is the art direction, not a promise of maximum settings on every phone. Android will use scalable quality, baked lighting, LODs, occlusion culling, texture compression and streamed world zones.
+## Performance approach
+Keep the mobile build lightweight first: limited ambient traffic, simple materials, scalable quality, and streamed districts. "Cinematic" is the visual target, not a promise of maximum settings on every phone.
