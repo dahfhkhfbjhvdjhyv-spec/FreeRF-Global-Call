@@ -14,6 +14,8 @@ Unity-based offline open-world Android game prototype, targeting a playable firs
 - Visible on-screen movement pad plus gas, brake, steering, enter and exit buttons
 - Drivable starter vehicle with camera handoff
 - Six lightweight ambient traffic cars
+- Twelve low-cost pedestrian walkers on sidewalk loops
+- Expanded district road grid and shared-material streetlights
 - First Drive mission with a checkpoint and completion state
 - Procedural prototype city scene generator
 
@@ -24,6 +26,9 @@ Unity-based offline open-world Android game prototype, targeting a playable firs
 4. Select **FreeCity > Generate Prototype City Scene**.
 5. Open `Assets/Scenes/FreeCity_Prototype.unity` and press Play.
 6. For editor keyboard testing: WASD/arrows move/drive, E enters a nearby car, F exits.
+
+## Current prototype scope
+The generated 500 x 500 m scene includes a central avenue, a secondary road grid, simple block buildings, streetlights, ambient traffic, pedestrians, a drivable starter car, and a first checkpoint mission. These are procedural placeholder assets; they are not final cinematic art or realistic traffic simulation.
 
 ## Android APK
 The repository includes **Actions > Free City Android APK**. It requires a valid Unity Personal license file in the repository Actions secret named `UNITY_LICENSE`. Run the workflow manually after adding the secret. A successful run uploads `FreeCity-Android-APK`.
