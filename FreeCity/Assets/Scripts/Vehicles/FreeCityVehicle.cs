@@ -36,6 +36,13 @@ namespace FreeCity
 
             if (seatPoint != null)
                 driver.transform.SetPositionAndRotation(seatPoint.position, transform.rotation);
+            if (Camera.main != null)
+            {
+                Vector3 cameraTarget = transform.position - transform.forward * 7f + Vector3.up * 3.5f;
+                Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position,
+                    cameraTarget, 7f * Time.deltaTime);
+                Camera.main.transform.LookAt(transform.position + Vector3.up * 1.2f);
+            }
             if (Input.GetKeyDown(KeyCode.F))
                 ExitVehicle();
         }
