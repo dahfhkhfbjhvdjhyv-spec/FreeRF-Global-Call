@@ -24,8 +24,9 @@ namespace FreeCity
                 return;
             }
 
-            float throttle = Input.GetAxisRaw("Vertical");
-            float steer = Input.GetAxisRaw("Horizontal");
+            Vector2 touchMove = FreeCityTouchInput.Move;
+            float throttle = Mathf.Abs(touchMove.y) > 0.05f ? touchMove.y : Input.GetAxisRaw("Vertical");
+            float steer = Mathf.Abs(touchMove.x) > 0.05f ? touchMove.x : Input.GetAxisRaw("Horizontal");
             float target = throttle >= 0f ? throttle * maxSpeed : throttle * maxSpeed * 0.45f;
             float rate = throttle >= 0f ? acceleration : reverseAcceleration;
             speed = Mathf.MoveTowards(speed, target, rate * Time.deltaTime);
