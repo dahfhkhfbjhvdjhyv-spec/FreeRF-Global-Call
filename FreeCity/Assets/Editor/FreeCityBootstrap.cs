@@ -42,6 +42,8 @@ namespace FreeCity.Editor
             new GameObject("FreeCityTouchInput").AddComponent<FreeCityTouchInput>();
 
             CreateStarterCar();
+            new GameObject("AmbientTraffic").AddComponent<FreeCityTraffic>();
+            CreateMissionCheckpoint();
 
             var cam = Camera.main;
             if (cam != null)
@@ -63,6 +65,21 @@ namespace FreeCity.Editor
             EditorSceneManager.SaveScene(scene, "Assets/Scenes/FreeCity_Prototype.unity");
             AssetDatabase.SaveAssets();
             Debug.Log("FreeCity prototype scene generated. Press Play to test movement.");
+        }
+
+        private static void CreateMissionCheckpoint()
+        {
+            var checkpoint = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+            checkpoint.name = "MissionCheckpoint";
+            checkpoint.transform.position = new Vector3(0f, 0.12f, 105f);
+            checkpoint.transform.localScale = new Vector3(4f, 0.25f, 4f);
+            checkpoint.GetComponent<Renderer>().sharedMaterial =
+                MakeMaterial("CheckpointGlow", new Color(0.1f, 0.85f, 1f));
+            checkpoint.GetComponent<CapsuleCollider>().isTrigger = true;
+            var mission = checkpoint.AddComponent<FreeCityMission>();
+            var serialized = new SerializedObject(mission);
+            serialized.FindProperty("destination").objectReferenceValue = checkpoint.transform;
+            serialized.ApplyModifiedPropertiesWithoutUndo();
         }
 
         private static void CreateStarterCar()
