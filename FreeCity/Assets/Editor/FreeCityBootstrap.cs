@@ -39,6 +39,7 @@ namespace FreeCity.Editor
             Object.DestroyImmediate(player.GetComponent<CapsuleCollider>());
             player.AddComponent<CharacterController>();
             player.AddComponent<ThirdPersonPlayer>();
+            new GameObject("FreeCityTouchInput").AddComponent<FreeCityTouchInput>();
 
             CreateStarterCar();
 
@@ -67,7 +68,7 @@ namespace FreeCity.Editor
         private static void CreateStarterCar()
         {
             var car = new GameObject("StarterCar");
-            car.transform.position = new Vector3(5f, 0.8f, -12f);
+            car.transform.position = new Vector3(3f, 0.8f, -12f);
             car.AddComponent<FreeCityVehicle>();
 
             var body = GameObject.CreatePrimitive(PrimitiveType.Cube);
