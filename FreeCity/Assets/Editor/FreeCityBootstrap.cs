@@ -62,6 +62,8 @@ namespace FreeCity.Editor
                 light.intensity = 1.15f;
             }
 
+            if (!AssetDatabase.IsValidFolder("Assets/Scenes"))
+                AssetDatabase.CreateFolder("Assets", "Scenes");
             EditorSceneManager.SaveScene(scene, "Assets/Scenes/FreeCity_Prototype.unity");
             AssetDatabase.SaveAssets();
             Debug.Log("FreeCity prototype scene generated. Press Play to test movement.");
