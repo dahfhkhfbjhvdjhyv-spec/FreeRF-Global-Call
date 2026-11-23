@@ -1,0 +1,35 @@
+name: FreeCity Android APK
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build FreeCity for Android
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Unity license secret
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        run: |
+          if [ -z "$UNITY_LICENSE" ]; then
+            echo "::error::Add a Unity Personal license file as the UNITY_LICENSE repository secret, then run this workflow again."
+            exit 1
+          fi
+      - uses: actions/checkout@v4
+      - name: Build Android APK with Unity
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          projectPath: FreeCity
+          unityVersion: 2022.3.50f1
+          targetPlatform: Android
+          buildMethod: FreeCity.Editor.FreeCityAndroidBuild.Build
+          androidAppBundle: false
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: FreeCity-Android-APK
+          path: FreeCity/Build/FreeCity.apk
+          if-no-files-found: error
