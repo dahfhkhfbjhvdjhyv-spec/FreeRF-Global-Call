@@ -43,7 +43,7 @@ def main():
             if len(title) < 2 or len(answer) < 35:
                 return
             # Avoid malformed or excessively long prompts.
-            short_title = clean(title)[:100]
+            short_title = clean(title)[:40]
             prompt = f"প্রশ্ন: {short_title} সম্পর্কে সংক্ষেপে বলো।\nউত্তর:"
             row = {"prompt": prompt, "answer": " " + answer}
             dst.write(json.dumps(row, ensure_ascii=False) + "\n")
