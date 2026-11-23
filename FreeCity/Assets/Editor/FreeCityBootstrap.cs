@@ -106,6 +106,9 @@ namespace FreeCity.Editor
             checkpoint.GetComponent<Renderer>().sharedMaterial =
                 MakeMaterial("CheckpointGlow", new Color(0.1f, 0.85f, 1f));
             checkpoint.GetComponent<CapsuleCollider>().isTrigger = true;
+            var checkpointBody = checkpoint.AddComponent<Rigidbody>();
+            checkpointBody.isKinematic = true;
+            checkpointBody.useGravity = false;
             var mission = checkpoint.AddComponent<FreeCityMission>();
             var serialized = new SerializedObject(mission);
             serialized.FindProperty("destination").objectReferenceValue = checkpoint.transform;
@@ -116,6 +119,10 @@ namespace FreeCity.Editor
         {
             var car = new GameObject("StarterCar");
             car.transform.position = new Vector3(3f, 0.8f, -12f);
+            var carBody = car.AddComponent<Rigidbody>();
+            carBody.isKinematic = true;
+            carBody.useGravity = false;
+            carBody.interpolation = RigidbodyInterpolation.Interpolate;
             car.AddComponent<FreeCityVehicle>();
 
             var body = GameObject.CreatePrimitive(PrimitiveType.Cube);
