@@ -11,6 +11,9 @@ namespace FreeCity.Editor
             FreeCityBootstrap.Generate();
             PlayerSettings.companyName = "FreeCity Studio";
             PlayerSettings.productName = "FreeCity";
+            PlayerSettings.defaultInterfaceOrientation = UIOrientation.LandscapeLeft;
+            PlayerSettings.stripEngineCode = true;
+            PlayerSettings.SetManagedStrippingLevel(BuildTargetGroup.Android, ManagedStrippingLevel.Medium);
             PlayerSettings.applicationIdentifier = "com.freecity.openworld";
             PlayerSettings.Android.minSdkVersion = AndroidSdkVersions.AndroidApiLevel26;
             PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARM64;
