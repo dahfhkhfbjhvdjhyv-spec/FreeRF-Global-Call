@@ -21,6 +21,7 @@ namespace FreeCity.Editor
             CreateCube("Terrain", new Vector3(0, -0.6f, 0), new Vector3(500, 1, 500), ground);
             CreateCube("MainRoad_NS", new Vector3(0, -0.05f, 0), new Vector3(16, 0.1f, 500), road);
             CreateCube("MainRoad_EW", new Vector3(0, -0.04f, 0), new Vector3(500, 0.1f, 16), road);
+            CreateDistrictRoads(road);
 
             for (int x = -4; x <= 4; x++)
             for (int z = -4; z <= 4; z++)
@@ -43,6 +44,7 @@ namespace FreeCity.Editor
 
             CreateStarterCar();
             new GameObject("AmbientTraffic").AddComponent<FreeCityTraffic>();
+            new GameObject("PedestrianAmbience").AddComponent<FreeCityPedestrians>();
             CreateMissionCheckpoint();
 
             var cam = Camera.main;
@@ -67,6 +69,32 @@ namespace FreeCity.Editor
             EditorSceneManager.SaveScene(scene, "Assets/Scenes/FreeCity_Prototype.unity");
             AssetDatabase.SaveAssets();
             Debug.Log("FreeCity prototype scene generated. Press Play to test movement.");
+        }
+
+        private static void CreateDistrictRoads(Material road)
+        {
+            for (int i = -3; i <= 3; i++)
+            {
+                if (i == 0) continue;
+                float p = i * 42f + (i > 0 ? -21f : 21f);
+                CreateCube("GridRoad_NS_" + i, new Vector3(p, -0.035f, 0), new Vector3(7f, 0.08f, 500f), road);
+                CreateCube("GridRoad_EW_" + i, new Vector3(0, -0.03f, p), new Vector3(500f, 0.08f, 7f), road);
+                for (int j = -4; j <= 4; j++)
+                {
+                    float z = j * 48f;
+                    CreateStreetLight(new Vector3(p + 5.5f, 0f, z));
+                    CreateStreetLight(new Vector3(z, 0f, p + 5.5f));
+                }
+            }
+        }
+
+        private static void CreateStreetLight(Vector3 position)
+        {
+            Material poleMat = MakeMaterial("StreetLightMetal", new Color(0.12f, 0.14f, 0.16f));
+            Material lampMat = MakeMaterial("StreetLightLamp", new Color(1f, 0.82f, 0.48f));
+            CreateCube("StreetLightPole", position + Vector3.up * 3f, new Vector3(0.18f, 6f, 0.18f), poleMat);
+            CreateCube("StreetLightArm", position + new Vector3(0.65f, 5.8f, 0f), new Vector3(1.3f, 0.14f, 0.14f), poleMat);
+            CreateCube("StreetLightHead", position + new Vector3(1.2f, 5.65f, 0f), new Vector3(0.55f, 0.18f, 0.4f), lampMat);
         }
 
         private static void CreateMissionCheckpoint()
