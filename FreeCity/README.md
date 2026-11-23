@@ -12,8 +12,21 @@ A Unity-based, offline, third-person open-world Android game prototype.
 ## Project setup
 Open this folder in a compatible Unity LTS editor. Install Android Build Support, Android SDK & NDK Tools, and OpenJDK through Unity Hub. Open the scene created under `Assets/Scenes` (the initial scene is assembled in the editor).
 
+## Prototype controls
+- Walk: left-side touchscreen drag; keyboard WASD/arrows in the Unity Editor
+- Run: Left Shift in the Editor
+- Enter nearby car: E
+- Drive: right-side touchscreen drag; keyboard WASD/arrows in the Editor
+- Exit car: F
+
+## Generate and test the scene
+Open the `FreeCity` folder in Unity 2022.3.50f1, wait for packages to resolve, then select **FreeCity > Generate Prototype City Scene**. Open `Assets/Scenes/FreeCity_Prototype.unity` and press Play.
+
+## Android build
+The repository includes a GitHub Actions workflow at **Actions > Free City Android APK**. It requires a valid Unity Personal license file stored as the repository Actions secret `UNITY_LICENSE`. Run the workflow manually after adding that secret. The APK is uploaded as the `FreeCity-Android-APK` artifact.
+
 ## Current status
-This repository contains the initial gameplay code and project configuration. It is not an APK yet. A reproducible Android build also requires a Unity editor installation and a valid Unity license in the build environment.
+The initial gameplay prototype source and a reproducible Android build entry point are committed. No APK has been built or runtime-tested yet; Unity compilation and the Android build still require the Unity license secret and a successful Actions run.
 
 ## Planned milestones
 1. Player movement and follow camera
