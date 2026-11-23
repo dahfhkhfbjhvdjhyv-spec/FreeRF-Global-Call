@@ -41,13 +41,18 @@ jobs:
           PY
       - name: Train from scratch on complete Bengali Wikipedia
         run: python freemind-scratch/train.py --steps 10000 --save-every 500
-      - name: Upload checkpoint and corpus manifest
+      - name: Build Bengali instruction-response examples
+        run: python freemind-scratch/build_instruction_data.py --min-examples 10000
+      - name: Fine-tune pretrained model on instruction responses
+        run: python freemind-scratch/finetune_instruction.py --steps 1500 --batch-size 8
+      - name: Upload pretrained and instruction-tuned checkpoints
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: freemind-bengali-wikipedia-pretraining
+          name: freemind-bengali-instruction-finetuned
           path: |
             freemind-scratch/outputs/
             freemind-scratch/data/wikipedia_bn/dataset_manifest.json
+            freemind-scratch/data/instruction_bn/
           if-no-files-found: warn
           retention-days: 30
