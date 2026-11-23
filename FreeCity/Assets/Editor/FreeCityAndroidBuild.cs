@@ -19,6 +19,7 @@ namespace FreeCity.Editor
             PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARM64;
             PlayerSettings.SetScriptingBackend(BuildTargetGroup.Android, ScriptingImplementation.IL2CPP);
             EditorUserBuildSettings.buildAppBundle = false;
+            System.IO.Directory.CreateDirectory("Build");
 
             var options = new BuildPlayerOptions
             {
