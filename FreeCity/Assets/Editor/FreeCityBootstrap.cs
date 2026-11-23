@@ -40,6 +40,8 @@ namespace FreeCity.Editor
             player.AddComponent<CharacterController>();
             player.AddComponent<ThirdPersonPlayer>();
 
+            CreateStarterCar();
+
             var cam = Camera.main;
             if (cam != null)
             {
@@ -60,6 +62,53 @@ namespace FreeCity.Editor
             EditorSceneManager.SaveScene(scene, "Assets/Scenes/FreeCity_Prototype.unity");
             AssetDatabase.SaveAssets();
             Debug.Log("FreeCity prototype scene generated. Press Play to test movement.");
+        }
+
+        private static void CreateStarterCar()
+        {
+            var car = new GameObject("StarterCar");
+            car.transform.position = new Vector3(5f, 0.8f, -12f);
+            car.AddComponent<FreeCityVehicle>();
+
+            var body = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            body.name = "CarBody";
+            body.transform.SetParent(car.transform, false);
+            body.transform.localPosition = new Vector3(0f, 0.35f, 0f);
+            body.transform.localScale = new Vector3(2f, 0.7f, 4f);
+            body.GetComponent<Renderer>().sharedMaterial =
+                MakeMaterial("VehiclePaint", new Color(0.08f, 0.22f, 0.48f));
+
+            var cabin = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            cabin.name = "Cabin";
+            cabin.transform.SetParent(car.transform, false);
+            cabin.transform.localPosition = new Vector3(0f, 0.95f, -0.25f);
+            cabin.transform.localScale = new Vector3(1.65f, 0.65f, 1.8f);
+            cabin.GetComponent<Renderer>().sharedMaterial =
+                MakeMaterial("GlassTint", new Color(0.12f, 0.18f, 0.22f));
+
+            var trigger = car.AddComponent<SphereCollider>();
+            trigger.isTrigger = true;
+            trigger.radius = 3.5f;
+            var seat = new GameObject("SeatPoint");
+            seat.transform.SetParent(car.transform, false);
+            seat.transform.localPosition = new Vector3(0f, 0.8f, 0f);
+            var vehicle = car.GetComponent<FreeCityVehicle>();
+            var serialized = new SerializedObject(vehicle);
+            serialized.FindProperty("seatPoint").objectReferenceValue = seat.transform;
+            serialized.ApplyModifiedPropertiesWithoutUndo();
+
+            for (int side = -1; side <= 1; side += 2)
+            for (int axle = -1; axle <= 1; axle += 2)
+            {
+                var wheel = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+                wheel.name = "Wheel";
+                wheel.transform.SetParent(car.transform, false);
+                wheel.transform.localPosition = new Vector3(side * 1.05f, 0f, axle * 1.25f);
+                wheel.transform.localRotation = Quaternion.Euler(0f, 0f, 90f);
+                wheel.transform.localScale = new Vector3(0.65f, 0.22f, 0.65f);
+                wheel.GetComponent<Renderer>().sharedMaterial =
+                    MakeMaterial("Rubber", new Color(0.025f, 0.025f, 0.03f));
+            }
         }
 
         private static Material MakeMaterial(string name, Color color)
