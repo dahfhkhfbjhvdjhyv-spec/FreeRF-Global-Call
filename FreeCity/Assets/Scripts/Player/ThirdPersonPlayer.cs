@@ -23,8 +23,9 @@ namespace FreeCity
 
         private void Update()
         {
-            float x = Input.GetAxisRaw("Horizontal");
-            float z = Input.GetAxisRaw("Vertical");
+            Vector2 touchMove = FreeCityTouchInput.Move;
+            float x = Mathf.Abs(touchMove.x) > 0.05f ? touchMove.x : Input.GetAxisRaw("Horizontal");
+            float z = Mathf.Abs(touchMove.y) > 0.05f ? touchMove.y : Input.GetAxisRaw("Vertical");
             Vector3 input = new Vector3(x, 0f, z);
             input = Vector3.ClampMagnitude(input, 1f);
 
