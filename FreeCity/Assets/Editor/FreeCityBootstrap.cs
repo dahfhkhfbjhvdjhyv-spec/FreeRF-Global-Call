@@ -73,6 +73,8 @@ namespace FreeCity.Editor
 
         private static void CreateDistrictRoads(Material road)
         {
+            Material poleMat = MakeMaterial("StreetLightMetal", new Color(0.12f, 0.14f, 0.16f));
+            Material lampMat = MakeMaterial("StreetLightLamp", new Color(1f, 0.82f, 0.48f));
             for (int i = -3; i <= 3; i++)
             {
                 if (i == 0) continue;
@@ -82,16 +84,14 @@ namespace FreeCity.Editor
                 for (int j = -4; j <= 4; j++)
                 {
                     float z = j * 48f;
-                    CreateStreetLight(new Vector3(p + 5.5f, 0f, z));
-                    CreateStreetLight(new Vector3(z, 0f, p + 5.5f));
+                    CreateStreetLight(new Vector3(p + 5.5f, 0f, z), poleMat, lampMat);
+                    CreateStreetLight(new Vector3(z, 0f, p + 5.5f), poleMat, lampMat);
                 }
             }
         }
 
-        private static void CreateStreetLight(Vector3 position)
+        private static void CreateStreetLight(Vector3 position, Material poleMat, Material lampMat)
         {
-            Material poleMat = MakeMaterial("StreetLightMetal", new Color(0.12f, 0.14f, 0.16f));
-            Material lampMat = MakeMaterial("StreetLightLamp", new Color(1f, 0.82f, 0.48f));
             CreateCube("StreetLightPole", position + Vector3.up * 3f, new Vector3(0.18f, 6f, 0.18f), poleMat);
             CreateCube("StreetLightArm", position + new Vector3(0.65f, 5.8f, 0f), new Vector3(1.3f, 0.14f, 0.14f), poleMat);
             CreateCube("StreetLightHead", position + new Vector3(1.2f, 5.65f, 0f), new Vector3(0.55f, 0.18f, 0.4f), lampMat);
